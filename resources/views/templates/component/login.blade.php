@@ -22,11 +22,14 @@
               </div>
               <div class="form">
               <h3>Create an account</h3>
-              <form action="#" method="post">
-                <input type="text" name="Username" placeholder="Username" required="">
-                <input type="password" name="Password" placeholder="Password" required="">
-                <input type="email" name="Email" placeholder="Email Address" required="">
-                <input type="text" name="Phone" placeholder="Phone Number" required="">
+              <form action="{{ route('register.store') }}" method="POST">
+                @csrf
+              <input type="text" name="name" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <input type="email" name="email" placeholder="Email Address">
+                <input type="text" name="alamat" placeholder="Alamat"> 
+                <input type="text" name="umur" placeholder="Umur"> 
+                <input type="text" name="bio" placeholder="Bio"> 
                 <input type="submit" value="Register">
               </form>
               </div>
