@@ -31,17 +31,7 @@ class RegisterController extends Controller
      */
     public function store(User $user,Request $request, Profile $profile)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-        ]);
-        
-        $request->validate([
-            'alamat' => 'required|string|max:225',
-            'umur' => 'required|integer',
-            'bio' => 'nullable|string'
-        ]);
+       
         
         $profile = new Profile;
         $profile->alamat = $request->alamat;//
