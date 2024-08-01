@@ -19,16 +19,24 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt(['name' => $request->name, 'password' => $request->password])) {
+        $credentials = $request->only('name', 'password');
+        // \Log::info('Attempting login with credentials:', $credentials);
+
+        if (Auth::attempt($credentials)) {
+            // \Log::info('Login successful for user:', ['user' => Auth::user()]);
+            // return redirect()->intended('/')
+            //                 ->withSuccess('Login successful');
             $request->session()->regenerate();
-            if (auth()->user()->level == 'user') {
-                return('BERHASIL'); 
+            if (Auth::user()->role_id == '1') {
+                return redirect()->route('home');
             } else {
-                return('BERHASIL LOGIN');
+                return redirect()->route('home');
             }
         }
-
-        return('GAGAL LOGIN');
+        // \Log::warning('Login failed for credentials:', $credentials);
+        return back()->withErrors([
+            'name' => 'The provided credentials do not match our records.',
+        ]);
     }
 
     public function logout(Request $request)
@@ -36,6 +44,6 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login')->withSuccess('Anda Telah Keluar Dari Sistem');
+        return redirect()->route('home')->withSuccess('Anda Telah Keluar Dari Sistem');
     }
 }
