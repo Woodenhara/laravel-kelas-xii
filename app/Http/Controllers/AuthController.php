@@ -7,29 +7,28 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    //
     public function login()
     {
-        return view('templates.component.login');
+        return view('templates.component.login');  // Sesuaikan dengan view login Anda
     }
 
     public function authenticate(Request $request)
     {
         $request->validate([
-            'username' => 'required',
+            'name' => 'required',
             'password' => 'required',
         ]);
 
-        if(Auth::attempt(['username' => $request->username, 'password' => $request->password]))
-        {
+        if (Auth::attempt(['name' => $request->name, 'password' => $request->password])) {
             $request->session()->regenerate();
-            if (auth()->user()->level == 'user')
-            { return redirect()->route('pembayaran.index'); } else
-            { return redirect()->route('spp.sppc.index'); }
+            if (auth()->user()->level == 'user') {
+                return('BERHASIL'); 
+            } else {
+                return('BERHASIL LOGIN');
+            }
         }
-        return back()->withErrors([
-            'notif' => 'Credential do not match with our records',
-        ])->onlyInput('username');
+
+        return('GAGAL LOGIN');
     }
 
     public function logout(Request $request)
@@ -37,6 +36,6 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('auth.login')->withSuccess('Anda Telah Keluar Dari Sistem');
+        return redirect()->route('login')->withSuccess('Anda Telah Keluar Dari Sistem');
     }
 }
