@@ -19,5 +19,5 @@ Route::controller(RegisterController::class)->group(function () {
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
     Route::post('/login', 'authenticate')->name('login.authenticate');
-    Route::post('/logout', 'logout')->name('logout');
+    Route::get('/logout', 'logout')->name('logout');
 });
