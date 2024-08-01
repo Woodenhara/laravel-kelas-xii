@@ -11,7 +11,16 @@
     </div>
     <div class="w3l_sign_in_register">
       <ul>
-        <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
+        <li>
+            @if (Auth::check())
+                <a href="{{ route('logout') }}">Logout</a>
+            @else
+                <a href="#" data-toggle="modal" data-target="#myModal">Login</a>
+            @endif
+            {{-- @php
+                dump(Auth::check())
+            @endphp --}}
+        </li>
       </ul>
     </div>
     <div class="clearfix"> </div>
