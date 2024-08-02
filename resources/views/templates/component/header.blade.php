@@ -12,6 +12,7 @@
     <div class="w3l_sign_in_register">
       <ul>
         <li>
+            {{-- {{dd(auth()->check())}} --}}
             @if (Auth::check())
                 <a href="{{ route('logout') }}">Logout</a>
             @else
