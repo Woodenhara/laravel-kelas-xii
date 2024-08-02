@@ -7,11 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login()
-    {
-        return view('templates.component.login');  // Sesuaikan dengan view login Anda
-    }
-
     public function authenticate(Request $request)
     {
         $request->validate([
@@ -28,13 +23,15 @@ class AuthController extends Controller
             $request->session()->regenerate();
             if (Auth()->user()->role_id == '1') {
                 return redirect()->route('home');
-            } else {
+            } else if (Auth()->admin()->role_id == '2') {
                 return redirect()->route('movies');
-            }
+            } else {
+                return ('Login failed for credentials.');
+            };
         }
         // \Log::warning('Login failed for credentials:', $credentials);
         return back()->withErrors([
-            'name' => 'The provided credentials do not match our records.',
+            'Login failed for credentials.',
         ]);
     }
 
