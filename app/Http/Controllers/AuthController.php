@@ -29,7 +29,7 @@ class AuthController extends Controller
             if (Auth()->user()->role_id == '1') {
                 return redirect()->route('home');
             } else {
-                return redirect()->route('home');
+                return redirect()->route('movies');
             }
         }
         // \Log::warning('Login failed for credentials:', $credentials);
