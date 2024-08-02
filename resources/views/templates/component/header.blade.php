@@ -17,9 +17,6 @@
             @else
                 <a href="#" data-toggle="modal" data-target="#myModal">Login</a>
             @endif
-            {{-- @php
-                dump(Auth::check())
-            @endphp --}}
         </li>
       </ul>
     </div>
