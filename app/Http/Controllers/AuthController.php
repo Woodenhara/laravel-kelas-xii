@@ -19,15 +19,14 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('name', 'password');
         // \Log::info('Attempting login with credentials:', $credentials);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt(['name' => $request->name, 'password' => $request->password])) {
             // \Log::info('Login successful for user:', ['user' => Auth::user()]);
             // return redirect()->intended('/')
             //                 ->withSuccess('Login successful');
             $request->session()->regenerate();
-            if (Auth::user()->role_id == '1') {
+            if (Auth()->user()->role_id == '1') {
                 return redirect()->route('home');
             } else {
                 return redirect()->route('home');
