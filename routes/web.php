@@ -3,7 +3,8 @@
 use App\Http\Controllers\{
     FilmController,
     RegisterController,
-    AuthController
+    AuthController,
+    UserController,
 };
 
 Route::get('/', [FilmController::class, 'movieHome'])->name('home');
@@ -16,14 +17,9 @@ Route::controller(RegisterController::class)->group(function () {
     Route::post('/register', 'store')->name('register.store');
 });
 
-Route::middleware(['can:isUser'])->group(function() {
-
-});
-Route::middleware(['can:isAdmin'])->group(function() {
-});
+Route::resource('users', UserController::class)->middleware('can:manage_users');
 
 Route::controller(AuthController::class)->group(function () {
-    Route::get('/login', 'login')->name('login');
-    Route::post('/login', 'authenticate')->name('login.authenticate');
-    Route::get('/logout', 'logout')->name('logout');
+    Route::post('authenticate', 'authenticate')->name('login.authenticate');
+    Route::post('logout', 'logout')->name('login.logout');
 });
