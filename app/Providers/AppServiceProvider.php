@@ -3,12 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Genre;
-use App\Models\User;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Pagination\Paginator;
+use App\Providers\FilmServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+        $this->app->register(FilmServiceProvider::class);
     }
 
     /**
@@ -31,8 +31,5 @@ class AppServiceProvider extends ServiceProvider
             view()->share('genres', Genre::all());
             Paginator::useBootstrap();
         }
-        Gate::define('manage_users', function(User $user){
-            return $user->is_admin == 2;
-        });
     }
 }
