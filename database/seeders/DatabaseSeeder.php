@@ -25,11 +25,11 @@ class DatabaseSeeder extends Seeder
             CastSeeder::class,
             FilmSeeder::class,
             PeranSeeder::class,
-            // RoleSeeder::class,
-            // ProfileSeeder::class,
-            // UserSeeder::class,
-            // AdminSeeder::class,
-            // KritikSeeder::class,
+             RoleSeeder::class,
+             ProfileSeeder::class,
+            UserSeeder::class,
+            AdminSeeder::class,
+            KritikSeeder::class,
         ]);
     }
 }
