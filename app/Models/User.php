@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -20,8 +19,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'profile_id',
-        'role_id',
+        'profile_id', // Foreign key untuk profile
+        'role_id',    // Foreign key untuk role (jika ada)
     ];
 
     /**
@@ -35,7 +34,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
      * @return array<string, string>
      */
@@ -46,8 +45,28 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Relasi ke model Profile
+     */
     public function profile()
     {
         return $this->belongsTo(Profile::class);
+    }
+
+    /**
+     * Relasi ke model Role (opsional, jika kamu memiliki role)
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Relasi ke model Kritik (dari contoh sebelumnya)
+     */
+    public function kritiks()
+    {
+        return $this->hasMany(Kritik::class, 'user_id');
     }
 }
