@@ -5,6 +5,7 @@ namespace App\Http\Requests\Api;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+
 class StoreFilmRequest extends FormRequest
 {
     /**
@@ -23,12 +24,11 @@ class StoreFilmRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
             'title' => 'required',
-            'sinopsis' => 'required',
-            'year' => 'required',
+            'sinopsis' => 'required|min:20',
+            'year' => 'required|integer',
             'poster' => 'required',
-            'genre_id' => 'required|exists:genres,id',
+            'genre_id' => 'required|exists:genres,id'
         ];
     }
     public function failedValidation(Validator $validator)
@@ -36,7 +36,7 @@ class StoreFilmRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success'   => false,
             'message'   => 'Validation errors',
-            'data'      => $validator->errors(),
+            'data'      => $validator->errors()
         ]));
     }
 }

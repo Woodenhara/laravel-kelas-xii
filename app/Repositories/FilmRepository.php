@@ -3,9 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Film;
-use App\Interfaces\FilmRepositoryInterface;
+use App\Interfaces\FilmRepositoryInterFace;
 
-class FilmRepository implements FilmRepositoryInterface
+class FilmRepository implements FilmRepositoryInterFace
 {
     /**
      * Create a new class instance.
@@ -16,18 +16,13 @@ class FilmRepository implements FilmRepositoryInterface
     }
 
     public function getById($id){
-        return Film::findOrFail($id);
-    }
+        return Film::with('peran.cast')->findOrFail($id);
+     }
+ 
 
-    public function store(array $data){
-        return Film::create($data);
-    }
+    public function store(array $details){
+        return Film::create($details);
+     }
 
-    public function update(array $data,$id){
-        return FIlm::whereId($id)->update($data);
-    }
-
-    public function delete($id){
-        Film::destroy($id);
-    }
+   
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Cast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,3 +21,4 @@ class Peran extends Model
         return $this->belongsTo(Film::class, 'film_id', 'id');
     }
 }
+
