@@ -2,6 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\{
+    Genre,
+    Kritik,
+    Peran,
+};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
