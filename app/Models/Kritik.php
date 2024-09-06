@@ -20,7 +20,7 @@ class Kritik extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class,'id', 'user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
     public function film() {
         return $this->belongsTo(Film::class, 'film_id');

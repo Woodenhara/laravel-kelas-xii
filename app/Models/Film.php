@@ -20,7 +20,7 @@ class Film extends Model
         return $this->hasMany(Peran::class, 'film_id');
     }
 
-    public function kritik(){
+    public function kritik(){   
         return $this->hasMany(Kritik::class, 'film_id');
     }
 

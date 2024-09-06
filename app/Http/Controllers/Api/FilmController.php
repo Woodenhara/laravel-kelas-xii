@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\Api\StoreFilmRequest;
+use App\Http\Requests\Api\{
+    StoreFilmRequest,
+    UpdateFilmRequest,
+};
 use App\Interfaces\FilmRepositoryInterface;
 use App\Classes\ApiResponseClass;
 use App\Http\Resources\FilmResource;
@@ -86,9 +89,24 @@ class FilmController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateFilmRequest $request, $id)
     {
         //
+        $posterPath = $request->file('poster')->store('public/images');
+
+        $updateDetails = $request->all();
+        $updateDetails['poster'] = str_replace('public/', 'storage/', $posterPath);
+
+        DB::beginTransaction();
+        try{
+             $film = $this->filmRepositoryInterface->update($updateDetails, $id);
+
+             DB::commit();
+             return ApiResponseClass::sendResponse('Film Update Successful','',201);
+
+        }catch(\Exception $ex){
+            return ApiResponseClass::rollback($ex);
+        }
     }
 
     /**
@@ -97,5 +115,16 @@ class FilmController extends Controller
     public function destroy(string $id)
     {
         //
+        DB::beginTransaction();
+        try{
+            $this->filmRepositoryInterface->delete($id);
+            DB::commit();
+            return ApiResponseClass::sendResponse('Film Delete Successful', 204);
+
+        }catch(\Exception $ex){
+            DB::rollBack();
+            return ApiResponseClass::rollback($ex);
+        }
     }
+
 }

@@ -22,4 +22,18 @@ class FilmRepository implements FilmRepositoryInterface
     {
         return Film::create($data);
     }
+
+    public function update(array $data,$id)
+    {
+        $film = Film::find($id);
+        $film->update($data);
+
+        return $film->refresh();
+
+    }
+
+    public function delete($id)
+    {
+        return Film::destroy($id);
+    }
 }
